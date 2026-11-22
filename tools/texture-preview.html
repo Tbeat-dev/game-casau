@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Texture & Sky Preview — Cá Sấu Lên Bờ</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Be Vietnam Pro", system-ui, sans-serif;
+        background: #1e1a16;
+        color: #f3e8cf;
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        height: 100vh;
+        overflow: hidden;
+      }
+      aside {
+        background: #2a2119;
+        border-right: 2px solid #5b3a24;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        overflow-y: auto;
+      }
+      h1 { margin: 0; font-size: 16px; color: #e0a526; }
+      label { font-size: 12px; color: #d6c5a3; display: block; margin-bottom: 4px; }
+      select, button {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 6px;
+        border: 1px solid #5b3a24;
+        background: #1e1a16;
+        color: #f3e8cf;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      button:hover, button.active {
+        border-color: #e0a526;
+        background: #3a2b1f;
+      }
+      .btn-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .stats {
+        background: #171310;
+        border: 1px solid #5b3a24;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+      #viewport { position: relative; width: 100%; height: 100%; }
+      #badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: rgba(30, 26, 22, 0.9);
+        border: 1px solid #e0a526;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <h1>Texture & Vòm Trời (TEX-0)</h1>
+      <div>
+        <label for="texSelect">Vật liệu / Texture ID (lát 3×3):</label>
+        <select id="texSelect"></select>
+      </div>
+      <div>
+        <label for="roundSelect">Vòm trời & Sương mù vòng chơi:</label>
+        <select id="roundSelect">
+          <option value="1">sky.round1 — R1 Chiều Muộn</option>
+          <option value="2">sky.round2 — R2 Hoàng Hôn Cam</option>
+          <option value="3">sky.round3 — R3 Chạng Vạng Sương</option>
+          <option value="4">sky.final — Chung Kết Đêm Hội</option>
+        </select>
+      </div>
+      <div>
+        <label>Chế độ kênh bản đồ (PBR Channel):</label>
+        <div class="btn-row">
+          <button type="button" data-mode="pbr" class="active">Full PBR</button>
+          <button type="button" data-mode="diffuse">Chỉ Diffuse (sRGB)</button>
+          <button type="button" data-mode="normal">Normal GL (Linear)</button>
+          <button type="button" data-mode="arm">ARM (AO/Rough/Met)</button>
+        </div>
+      </div>
+      <div>
+        <label>Kiểm tra lát & ánh sáng:</label>
+        <div class="btn-row">
+          <button type="button" id="toggleNormalBtn">Bật/Tắt Normal</button>
+          <button type="button" id="toggleFogBtn">Bật/Tắt Sương Mù</button>
+        </div>
+      </div>
+      <div class="stats" id="stats">Đang khởi tạo MaterialLibrary...</div>
+    </aside>
+    <main id="viewport">
+      <div id="badge">Lát 3×3 trên mặt phẳng & hình cầu · Kéo chuột để xoay · Cuộn để zoom</div>
+    </main>
+
+    <script type="module">
+      import * as THREE from 'three';
+      import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+      import { ASSET_CATALOG } from '/src/assets/AssetRegistry.ts';
+      import { MaterialLibrary } from '/src/assets/MaterialLibrary.ts';
+      import { SkyAtmosphereManager } from '/src/game/SkyAtmosphereManager.ts';
+
+      const viewport = document.getElementById('viewport');
+      const texSelect = document.getElementById('texSelect');
+      const roundSelect = document.getElementById('roundSelect');
+      const statsEl = document.getElementById('stats');
+      const modeBtns = Array.from(document.querySelectorAll('[data-mode]'));
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(viewport.clientWidth, viewport.clientHeight);
+      viewport.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(48, viewport.clientWidth / viewport.clientHeight, 0.1, 260);
+      camera.position.set(4.8, 3.8, 6.2);
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.target.set(0, 0.6, 0);
+
+      const matLib = new MaterialLibrary();
+      matLib.setMaxAnisotropy(renderer.capabilities.getMaxAnisotropy());
+      const manifest = await matLib.init();
+
+      const sky = new SkyAtmosphereManager();
+      await sky.init(scene, renderer, false, manifest);
+
+      const textureEntries = Object.values(ASSET_CATALOG).filter((e) => e.category === 'texture');
+      textureEntries.forEach((e) => {
+        const opt = document.createElement('option');
+        opt.value = e.id;
+        opt.textContent = `${e.id} — ${e.label}`;
+        texSelect.appendChild(opt);
+      });
+
+      const planeGeo = new THREE.PlaneGeometry(6, 6);
+      planeGeo.rotateX(-Math.PI / 2);
+      const sphereGeo = new THREE.SphereGeometry(1.05, 32, 24);
+      const previewMat = new THREE.MeshStandardMaterial({ roughness: 0.8 });
+
+      const planeMesh = new THREE.Mesh(planeGeo, previewMat);
+      planeMesh.position.set(0, 0, 0);
+      const sphereMesh = new THREE.Mesh(sphereGeo, previewMat);
+      sphereMesh.position.set(0, 1.15, 0);
+      scene.add(planeMesh, sphereMesh);
+
+      let currentMode = 'pbr';
+      let useNormal = true;
+      let fogEnabled = true;
+
+      function applyPreviewMaterial() {
+        const id = texSelect.value;
+        const set = matLib.getTextureSet(id);
+        const cloneRepeat = (t, isColor) => {
+          const c = t.clone();
+          c.colorSpace = isColor ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+          c.wrapS = c.wrapT = THREE.RepeatWrapping;
+          c.repeat.set(3, 3);
+          c.needsUpdate = true;
+          return c;
+        };
+
+        previewMat.map?.dispose();
+        previewMat.normalMap?.dispose();
+        previewMat.roughnessMap?.dispose();
+        previewMat.aoMap?.dispose();
+
+        if (currentMode === 'diffuse') {
+          previewMat.map = cloneRepeat(set.map, true);
+          previewMat.normalMap = null;
+          previewMat.roughnessMap = null;
+          previewMat.aoMap = null;
+          previewMat.roughness = 0.85;
+        } else if (currentMode === 'normal') {
+          previewMat.map = cloneRepeat(set.normalMap, true);
+          previewMat.normalMap = null;
+          previewMat.roughnessMap = null;
+          previewMat.aoMap = null;
+          previewMat.roughness = 0.9;
+        } else if (currentMode === 'arm') {
+          previewMat.map = cloneRepeat(set.armMap, true);
+          previewMat.normalMap = null;
+          previewMat.roughnessMap = null;
+          previewMat.aoMap = null;
+          previewMat.roughness = 0.9;
+        } else {
+          const arm = cloneRepeat(set.armMap, false);
+          previewMat.map = cloneRepeat(set.map, true);
+          previewMat.normalMap = useNormal ? cloneRepeat(set.normalMap, false) : null;
+          previewMat.normalScale.set(0.45, 0.45);
+          previewMat.aoMap = arm;
+          previewMat.aoMapIntensity = 0.45;
+          previewMat.roughnessMap = arm;
+          previewMat.roughness = 1.0;
+          previewMat.metalnessMap = arm;
+          previewMat.metalness = 0.05;
+        }
+        previewMat.needsUpdate = true;
+
+        const entry = ASSET_CATALOG[id];
+        const profile = sky.getProfileForRound(Number(roundSelect.value));
+        statsEl.innerHTML = [
+          `<b>ID:</b> ${id}`,
+          `<b>Nguồn hiện tại:</b> ${set.sourceKind === 'polyhaven' ? 'Poly Haven CC0 (Stylized)' : 'Procedural Stylized PBR Fallback'}`,
+          `<b>Ghi chú:</b> ${entry?.notes ?? '—'}`,
+          `<b>Lát:</b> 3×3 (RepeatWrapping)`,
+          `<b>ColorSpace:</b> Diffuse=sRGB, nor_gl/ARM=Linear`,
+          `<b>Vòm trời:</b> ${profile.skyId} (${profile.label})`,
+          `<b>Sương chân trời:</b> ${fogEnabled ? profile.fogColor : 'Tắt'}`,
+        ].join('<br>');
+      }
+
+      texSelect.addEventListener('change', applyPreviewMaterial);
+      roundSelect.addEventListener('change', () => {
+        sky.snapToRound(Number(roundSelect.value));
+        applyPreviewMaterial();
+      });
+      modeBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          modeBtns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentMode = btn.dataset.mode;
+          applyPreviewMaterial();
+        });
+      });
+      document.getElementById('toggleNormalBtn').addEventListener('click', () => {
+        useNormal = !useNormal;
+        applyPreviewMaterial();
+      });
+      document.getElementById('toggleFogBtn').addEventListener('click', () => {
+        fogEnabled = !fogEnabled;
+        sky.setBlindVisibleRange(fogEnabled ? 58 : 200);
+        if (!fogEnabled && scene.fog) scene.fog.density = 0;
+        applyPreviewMaterial();
+      });
+
+      window.addEventListener('resize', () => {
+        camera.aspect = viewport.clientWidth / viewport.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(viewport.clientWidth, viewport.clientHeight);
+      });
+
+      applyPreviewMaterial();
+      const clock = new THREE.Clock();
+      function animate() {
+        const dt = Math.min(clock.getDelta(), 0.05);
+        sky.update(dt, clock.elapsedTime, camera.position);
+        controls.update();
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+:root {
+  /* Measured TravelBook Lite Palette */
+  --tb-paper: #ffd7a8;
+  --tb-paper-shade: #e5b67f;
+  --tb-paper-shadow: #dea974;
+  --tb-paper-hi: #ffe3c6;
+  --tb-cover: #b75b5f;
+  --tb-cover-spine: #9c4351;
+  --tb-ink: #493333;
+  --tb-wood-dark: #45292a;
+  --tb-wood-mid: #4d2a26;
+  --tb-wood-rim: #634041;
+  --tb-gold: #ffd071;
+  --tb-amber: #ffa34d;
+  --tb-heart: #d43e3e;
+  --tb-energy: #3e89d4;
+  --tb-star: #e1c432;
+
+  /* Vietnamese Đông Hồ Folk Palette (High-contrast tuned) */
+  --ui-paper: #f3e8cf;
+  --ui-paper-alt: #e8d7b2;
+  --ui-ink: #1e1a16;
+  --ui-ink-soft: #493333;
+  --ui-vermilion: #b3261e;
+  --ui-turmeric: #e0a526;
+  --ui-bamboo: #4f6f3a;
+  --ui-bamboo-bright: #77a855;
+  --ui-indigo: #2b3a67;
+  --ui-wood: #362116;
+
+  /* Z-index layer contract (preserves section 9.2) */
+  --z-canvas: 0;
+  --z-canvas-fx: 2;
+  --z-hud: 10;
+  --z-toast: 20;
+  --z-status: 30;
+  --z-modal: 40;
+  --z-loading: 50;
+  --z-error: 60;
+
+  /* Integer virtual stage scale (updated dynamically by App) */
+  --ui-k: 2;
+}
+
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.font-pixel-vn {
+  font-family: "Be Vietnam Pro", "VT323", system-ui, sans-serif;
+}
+
+.font-pixel-display {
+  font-family: "VT323", "Be Vietnam Pro", monospace;
+}
+
+.font-folk-title {
+  font-family: "Noto Serif", "Be Vietnam Pro", Georgia, serif;
+}
+
+.pixel-outline {
+  text-shadow:
+    1px 0 0 #1e1a16,
+    -1px 0 0 #1e1a16,
+    0 1px 0 #1e1a16,
+    0 -1px 0 #1e1a16,
+    1px 1px 0 #1e1a16;
+}
+
+.pixel-outline-soft {
+  text-shadow: 0 1px 0 rgba(30, 26, 22, 0.72);
+}
+
+.pixel-icon-ink {
+  filter:
+    drop-shadow(1px 0 0 #493333)
+    drop-shadow(-1px 0 0 #493333)
+    drop-shadow(0 1px 0 #493333)
+    drop-shadow(0 -1px 0 #493333);
+}
+
+/* Integer-scaled fixed 480x270 Virtual HUD Grid inside Stage */
+.vhud-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr auto;
+  grid-template-areas:
+    "top-left top-center top-right"
+    "mid-left mid-top ."
+    "mid-left center ."
+    "bottom-left bottom-center bottom-right";
+  gap: calc(4px * var(--ui-k)) calc(6px * var(--ui-k));
+  padding: calc(8px * var(--ui-k));
+}
+
+.vslot-top-left { grid-area: top-left; justify-self: start; align-self: start; }
+.vslot-top-center { grid-area: top-center; justify-self: center; align-self: start; }
+.vslot-top-right { grid-area: top-right; justify-self: end; align-self: start; }
+.vslot-mid-left { grid-area: mid-left; justify-self: start; align-self: center; }
+.vslot-mid-top { grid-area: mid-top; justify-self: center; align-self: start; }
+.vslot-center { grid-area: center; justify-self: center; align-self: center; }
+.vslot-bottom-left { grid-area: bottom-left; justify-self: start; align-self: end; }
+.vslot-bottom-center { grid-area: bottom-center; justify-self: center; align-self: end; }
+.vslot-bottom-right { grid-area: bottom-right; justify-self: end; align-self: end; }
+
+@media (max-width: 720px) {
+  .vhud-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto 1fr auto auto;
+    grid-template-areas:
+      "top-left top-right"
+      "top-center top-center"
+      "mid-top mid-top"
+      "mid-left mid-left"
+      "center center"
+      "bottom-center bottom-center"
+      "bottom-left bottom-right";
+    gap: 6px;
+    padding: 8px;
+  }
+  .vslot-mid-left {
+    justify-self: center;
+    align-self: start;
+  }
+}
+
+.pixel-btn-interactive {
+  transition: transform 80ms steps(2, end), filter 80ms steps(2, end);
+}
+
+.pixel-btn-interactive:hover:not(:disabled) {
+  filter: brightness(1.06);
+  transform: translateY(calc(-1px * var(--ui-k)));
+}
+
+.pixel-btn-interactive:active:not(:disabled) {
+  transform: translateY(calc(1px * var(--ui-k)));
+}
+
+.pixel-btn-interactive:focus-visible {
+  outline: 2px solid #ffd071;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pixel-btn-interactive {
+    transition: none !important;
+  }
+}

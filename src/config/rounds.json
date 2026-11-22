@@ -1,0 +1,103 @@
+{
+  "rounds": [
+    {
+      "roundNumber": 1,
+      "id": "round_1",
+      "name": "VÒNG 1 – CÁ SẤU TỈNH GIẤC",
+      "subtitle": "Làm quen nhịp hiệu lệnh & né cá sấu tuần tra",
+      "prepDuration": 4.0,
+      "actionDuration": 24.0,
+      "safeZoneCount": 2,
+      "safeZoneRadius": 7.5,
+      "safeZoneCapacity": 12,
+      "crocSpeed": 6.8,
+      "crocDetectRange": 16.0,
+      "crocVisionAngleDeg": 85,
+      "crocDirectionSwapInterval": 7.0,
+      "platformMoveSpeed": 0,
+      "shrinkArenaFactor": 1.0,
+      "mechanics": ["SafeZoneShift", "CrocDirectionSwap"],
+      "allowedSkills": ["nuoc_rut", "nhay_sen", "thang_bang_tre", "mat_cu", "tieng_trong", "phao_tre"],
+      "validSignals": [
+        { "id": "sig_len_bo", "text": "CÁ SẤU LÊN BỜ — CHẠY LÊN ĐẢO AN TOÀN!", "isValid": true, "targetType": "island" },
+        { "id": "sig_dinh_lang", "text": "CHUÔNG ĐÌNH VANG — VÀO SÂN ĐÌNH NGAY!", "isValid": true, "targetType": "temple" }
+      ],
+      "fakeSignals": []
+    },
+    {
+      "roundNumber": 2,
+      "id": "round_2",
+      "name": "VÒNG 2 – BỜ ĐẤT BIẾN MẤT",
+      "subtitle": "Bục nổi di chuyển & giới hạn sức chứa",
+      "prepDuration": 4.0,
+      "actionDuration": 26.0,
+      "safeZoneCount": 3,
+      "safeZoneRadius": 4.6,
+      "safeZoneCapacity": 3,
+      "crocSpeed": 7.8,
+      "crocDetectRange": 19.0,
+      "crocVisionAngleDeg": 95,
+      "crocDirectionSwapInterval": 5.5,
+      "platformMoveSpeed": 2.1,
+      "shrinkArenaFactor": 0.84,
+      "mechanics": ["LimitedCapacity", "MovingPlatforms", "TeamDecision"],
+      "allowedSkills": ["nuoc_rut", "nhay_sen", "thang_bang_tre", "mat_cu", "giu_cho", "keo_ban", "phao_tre"],
+      "validSignals": [
+        { "id": "sig_buc_noi", "text": "NƯỚC DÂNG! LÊN BỤC NỔI GIỚI HẠN CHỖ!", "isValid": true, "targetType": "platform" },
+        { "id": "sig_chia_nhom", "text": "HỘI LÀNG MỞ CỔNG — TÌM BỤC TRE AN TOÀN!", "isValid": true, "targetType": "platform" }
+      ],
+      "fakeSignals": []
+    },
+    {
+      "roundNumber": 3,
+      "id": "round_3",
+      "name": "VÒNG 3 – TÍN HIỆU GIẢ",
+      "subtitle": "Cẩn thận hiệu lệnh giả mạo! Sai tín hiệu sẽ bị loại",
+      "prepDuration": 4.0,
+      "actionDuration": 27.0,
+      "safeZoneCount": 2,
+      "safeZoneRadius": 5.2,
+      "safeZoneCapacity": 4,
+      "crocSpeed": 8.8,
+      "crocDetectRange": 22.0,
+      "crocVisionAngleDeg": 105,
+      "crocDirectionSwapInterval": 4.0,
+      "platformMoveSpeed": 1.6,
+      "shrinkArenaFactor": 0.78,
+      "mechanics": ["FakeSignal", "TemporarySafeZone", "LimitedCapacity"],
+      "allowedSkills": ["nuoc_rut", "nhay_sen", "thang_bang_tre", "tieng_trong", "giu_cho", "phao_tre"],
+      "validSignals": [
+        { "id": "sig_that_1", "text": "HIỆU LỆNH THẬT: TRỐNG HỘI KHAI — LÊN BỜ ĐÁ!", "isValid": true, "targetType": "island" },
+        { "id": "sig_that_2", "text": "HIỆU LỆNH THẬT: ĐÈN LỒNG SÁNG — CHẠY VỀ ĐÌNH!", "isValid": true, "targetType": "temple" }
+      ],
+      "fakeSignals": [
+        { "id": "sig_gia_1", "text": "CÁ SẤU NGỦ SAY — ĐỨNG YÊN DƯỚI NƯỚC!", "isValid": false, "targetType": "trap" },
+        { "id": "sig_gia_2", "text": "LỆNH NHÁI: NHẢY XUỐNG HỒ TRUNG TÂM!", "isValid": false, "targetType": "trap" }
+      ]
+    },
+    {
+      "roundNumber": 4,
+      "id": "round_final",
+      "name": "CHUNG KẾT – VÙNG ĐẤT CUỐI CÙNG",
+      "subtitle": "Vùng an toàn đổi liên tục, đấu trường thu hẹp!",
+      "prepDuration": 3.5,
+      "actionDuration": 30.0,
+      "safeZoneCount": 1,
+      "safeZoneRadius": 4.3,
+      "safeZoneCapacity": 2,
+      "crocSpeed": 9.8,
+      "crocDetectRange": 26.0,
+      "crocVisionAngleDeg": 120,
+      "crocDirectionSwapInterval": 3.0,
+      "platformMoveSpeed": 2.6,
+      "shrinkArenaFactor": 0.68,
+      "mechanics": ["FinalSurvivor", "SafeZoneShift", "LimitedCapacity", "MovingPlatforms"],
+      "allowedSkills": ["nuoc_rut", "nhay_sen", "thang_bang_tre", "mat_cu", "tieng_trong", "giu_cho", "keo_ban", "phao_tre"],
+      "validSignals": [
+        { "id": "sig_final_1", "text": "CHIẾNG CUỐI VANG! CHIẾM VÙNG ĐẤT DUY NHẤT!", "isValid": true, "targetType": "island" },
+        { "id": "sig_final_2", "text": "ĐẤT ĐỔI VỊ TRÍ — NHANH CHÂN LÊN ĐẢO MỚI!", "isValid": true, "targetType": "platform" }
+      ],
+      "fakeSignals": []
+    }
+  ]
+}

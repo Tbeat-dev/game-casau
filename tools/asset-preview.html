@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asset Preview — Cá Sấu Lên Bờ</title>
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Be Vietnam Pro", system-ui, sans-serif;
+        background: #1e1a16;
+        color: #f3e8cf;
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        height: 100vh;
+        overflow: hidden;
+      }
+      aside {
+        background: #2a2119;
+        border-right: 2px solid #5b3a24;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow-y: auto;
+      }
+      h1 {
+        margin: 0;
+        font-size: 16px;
+        color: #e0a526;
+      }
+      label {
+        font-size: 12px;
+        color: #d6c5a3;
+        display: block;
+        margin-bottom: 4px;
+      }
+      select, button {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 6px;
+        border: 1px solid #5b3a24;
+        background: #1e1a16;
+        color: #f3e8cf;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      button:hover {
+        border-color: #e0a526;
+        background: #3a2b1f;
+      }
+      .stats {
+        background: #171310;
+        border: 1px solid #5b3a24;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 12px;
+        line-height: 1.6;
+      }
+      .btn-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      #viewport {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      #badge {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        background: rgba(30, 26, 22, 0.88);
+        border: 1px solid #e0a526;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <h1>Kiểm Tra Tài Nguyên 3D (Phase 0)</h1>
+      <div>
+        <label for="asset-select">Chọn Asset từ AssetRegistry</label>
+        <select id="asset-select"></select>
+      </div>
+      <div>
+        <label for="anim-select">Animation Procedural</label>
+        <select id="anim-select">
+          <option value="idle">Idle (Đứng)</option>
+          <option value="walk">Walk (Đi bộ / Bơi chậm)</option>
+          <option value="run">Run (Chạy / Đuổi)</option>
+          <option value="jump">Jump (Nhảy)</option>
+          <option value="panic">Panic (Hoảng loạn)</option>
+          <option value="attack">Attack (Tấn công / Đớp)</option>
+          <option value="eliminated">Eliminated (Bị loại)</option>
+        </select>
+      </div>
+      <div class="btn-row">
+        <button id="btn-rotate">Tạm dừng xoay</button>
+        <button id="btn-reset">Reset góc nhìn</button>
+      </div>
+      <div class="stats" id="stats-box">Đang tải...</div>
+      <div class="stats">
+        <strong>Lưu ý bản quyền:</strong><br/>
+        • 68 model môi trường glTF/GLB: <strong>CC0 1.0</strong> (Quaternius).<br/>
+        • Imp.glb / Puglin.glb chưa xác minh license → không dùng trong bản chính thức.<br/>
+        • Nhân vật, cá sấu, đình làng, cầu gỗ, tre: <strong>Procedural Code</strong>.
+      </div>
+    </aside>
+    <main id="viewport">
+      <div id="badge">Kéo chuột để xoay · Cuộn để thu phóng</div>
+    </main>
+    <script type="module" src="/src/tools/assetPreview.ts"></script>
+  </body>
+</html>

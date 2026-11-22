@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "generatedAt": null,
+  "stylizeLevel": "medium",
+  "note": "Empty manifest until user-supplied Poly Haven CC0 files are placed under polyhaven/ and processed via tools/process_polyhaven.mjs. Game uses stylized procedural PBR fallbacks cleanly.",
+  "textures": {},
+  "hdri": {}
+}

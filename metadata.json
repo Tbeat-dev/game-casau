@@ -1,0 +1,6 @@
+{
+  "name": "Cá Sấu Lên Bờ – Survival Arena",
+  "description": "3D Stylized Vietnamese Folk Survival Party Game inspired by Cá Sấu Lên Bờ with AI contestants, Crocodile AI, skill progression, and Đông Hồ folk UI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

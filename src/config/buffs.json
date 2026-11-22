@@ -1,0 +1,165 @@
+{
+  "limits": {
+    "maxTimedBuffs": 3,
+    "maxDebuffs": 2,
+    "maxSpeedBonus": 0.35,
+    "maxSpeedPenalty": 0.4,
+    "debuffImmunitySec": 3.0,
+    "blindMinVisibleDist": 11.0,
+    "rareChannelDurationSec": 0.8
+  },
+  "buffs": [
+    {
+      "id": "gio_nhe",
+      "name": "Gió Nhẹ",
+      "rarity": "common",
+      "duration": 8.0,
+      "storable": false,
+      "channelTime": 0,
+      "speedBonus": 0.2,
+      "description": "+20% tốc độ di chuyển trong 8s (tối đa +35%).",
+      "icon": "wind",
+      "color": "#45e08a"
+    },
+    {
+      "id": "mat_sang",
+      "name": "Mắt Sáng",
+      "rarity": "common",
+      "duration": 10.0,
+      "storable": false,
+      "channelTime": 0,
+      "description": "Xóa hiệu ứng Mù, mở rộng tầm nhìn và miễn Mù 10s.",
+      "icon": "eye",
+      "color": "#45e08a"
+    },
+    {
+      "id": "re_vung",
+      "name": "Rễ Vững",
+      "rarity": "common",
+      "duration": 8.0,
+      "storable": false,
+      "channelTime": 0,
+      "description": "Miễn nhiễm Giảm Tốc và Rêu Trơn trong 8s.",
+      "icon": "bamboo",
+      "color": "#45e08a"
+    },
+    {
+      "id": "binh_khi",
+      "name": "Bình Khí",
+      "rarity": "common",
+      "duration": 10.0,
+      "storable": false,
+      "channelTime": 0,
+      "khiLucRegenBonus": 1.65,
+      "description": "Hồi nhanh Khí lực & giảm mạnh ảnh hưởng Kiệt Sức.",
+      "icon": "lotus",
+      "color": "#45e08a"
+    },
+    {
+      "id": "trong_hoi",
+      "name": "Trống Hội",
+      "rarity": "rare",
+      "duration": 12.0,
+      "storable": false,
+      "channelTime": 0.8,
+      "cooldownReduction": 0.3,
+      "description": "Giảm 30% thời gian hồi chiêu kỹ năng trong 12s.",
+      "icon": "drum",
+      "color": "#e0a526"
+    },
+    {
+      "id": "la_chan_sen",
+      "name": "Lá Chắn Sen",
+      "rarity": "rare",
+      "duration": 28.0,
+      "storable": true,
+      "channelTime": 0.8,
+      "description": "Cất ô [F] · Kích hoạt để chặn 1 lần bị cá sấu đớp (không cộng dồn Phao Tre).",
+      "icon": "shield",
+      "color": "#e0a526"
+    },
+    {
+      "id": "bua_giai",
+      "name": "Bùa Giải",
+      "rarity": "rare",
+      "duration": 0,
+      "storable": true,
+      "channelTime": 0.8,
+      "description": "Cất ô [F] · Ấn [F] để giải sạch mọi hiệu ứng bất lợi ngay lập tức.",
+      "icon": "anchor",
+      "color": "#e0a526"
+    }
+  ],
+  "debuffs": [
+    {
+      "id": "giam_toc",
+      "name": "Giảm Tốc",
+      "duration": 4.5,
+      "speedPenalty": 0.3,
+      "source": "Vùng bùn lầy hoặc cá sấu hất nước",
+      "telegraphText": "CẢNH BÁO: Bùn lầy dâng mép bờ — tránh giẫm phải!",
+      "icon": "mud",
+      "color": "#b3261e"
+    },
+    {
+      "id": "mu",
+      "name": "Mù Sương",
+      "duration": 5.0,
+      "speedPenalty": 0.0,
+      "source": "Khói nhang / sương dày hoặc nước bắn vào mắt",
+      "telegraphText": "CẢNH BÁO: Sương mù dày sắp phủ mặt hồ!",
+      "icon": "fog",
+      "color": "#b3261e"
+    },
+    {
+      "id": "u_tai",
+      "name": "Ù Tai",
+      "duration": 5.5,
+      "speedPenalty": 0.0,
+      "source": "Tiếng trống pháo lớn ở khu khán đài",
+      "telegraphText": "CẢNH BÁO: Trống pháo khán đài sắp vang dội (nhìn hiệu lệnh chữ)!",
+      "icon": "ear",
+      "color": "#b3261e"
+    },
+    {
+      "id": "reu_tron",
+      "name": "Rêu Trơn",
+      "duration": 5.0,
+      "speedPenalty": 0.08,
+      "source": "Bục nổi và cầu gỗ ẩm ướt",
+      "telegraphText": "CẢNH BÁO: Rêu ẩm phủ lên bục tre và cầu gỗ!",
+      "icon": "slip",
+      "color": "#b3261e"
+    },
+    {
+      "id": "kiet_suc",
+      "name": "Kiệt Sức",
+      "duration": 5.5,
+      "speedPenalty": 0.0,
+      "source": "Dùng kỹ năng dồn dập hoặc khí nóng Chung Kết",
+      "telegraphText": "CẢNH BÁO: Nắng gắt giữa hồ khiến Khí lực hồi chậm!",
+      "icon": "exhaust",
+      "color": "#b3261e"
+    },
+    {
+      "id": "chong_mat",
+      "name": "Chóng Mặt",
+      "duration": 3.5,
+      "speedPenalty": 0.05,
+      "source": "Sóng lớn khi cá sấu lao mạnh",
+      "telegraphText": "CẢNH BÁO: Sóng cuộn mạnh từ mặt hồ!",
+      "icon": "dizzy",
+      "color": "#b3261e"
+    },
+    {
+      "id": "cam_lang",
+      "name": "Câm Lặng",
+      "duration": 4.0,
+      "speedPenalty": 0.0,
+      "source": "Ấn triện đấu trường ở Chung Kết",
+      "telegraphText": "CẢNH BÁO: Ấn Câm Lặng sắp khóa 1 kỹ năng chủ động!",
+      "icon": "silence",
+      "color": "#b3261e"
+    }
+  ]
+}

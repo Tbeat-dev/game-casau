@@ -1,0 +1,103 @@
+{
+  "maxKhiLuc": 100,
+  "khiLucRegenPerSec": 12,
+  "skills": [
+    {
+      "id": "nuoc_rut",
+      "name": "Nước Rút",
+      "type": "active",
+      "khiLucCost": 35,
+      "cooldown": 7.5,
+      "duration": 1.6,
+      "speedMultiplier": 1.78,
+      "description": "Lướt nhanh theo hướng chạy trong 1.6 giây để thoát cá sấu.",
+      "bestRounds": [1, 4],
+      "icon": "wind"
+    },
+    {
+      "id": "nhay_sen",
+      "name": "Nhảy Sen",
+      "type": "active",
+      "khiLucCost": 28,
+      "cooldown": 5.0,
+      "duration": 0.9,
+      "jumpMultiplier": 1.65,
+      "forwardBoost": 6.5,
+      "description": "Bật nhảy xa và cao vượt khoảng nước giữa các bục nổi.",
+      "bestRounds": [2, 4],
+      "icon": "lotus"
+    },
+    {
+      "id": "thang_bang_tre",
+      "name": "Thăng Bằng Tre",
+      "type": "passive",
+      "khiLucCost": 0,
+      "cooldown": 0,
+      "duration": 0,
+      "knockbackResist": 0.9,
+      "slipResist": 0.95,
+      "description": "Bị động: Chống trượt và không bị đẩy ngã trên bục nổi, cầu gỗ.",
+      "bestRounds": [2, 4],
+      "icon": "bamboo"
+    },
+    {
+      "id": "mat_cu",
+      "name": "Mắt Cú",
+      "type": "active",
+      "khiLucCost": 30,
+      "cooldown": 10.0,
+      "duration": 4.2,
+      "description": "Hiện tầm nhìn cá sấu và sức chứa vùng an toàn trong 4.2 giây.",
+      "bestRounds": [1, 2, 4],
+      "icon": "eye"
+    },
+    {
+      "id": "tieng_trong",
+      "name": "Tiếng Trống",
+      "type": "active",
+      "khiLucCost": 32,
+      "cooldown": 11.0,
+      "duration": 2.8,
+      "lureRadius": 22,
+      "description": "Gõ trống nhử cá sấu chuyển hướng về phía điểm vang trong 2.8 giây.",
+      "bestRounds": [1, 3, 4],
+      "icon": "drum"
+    },
+    {
+      "id": "giu_cho",
+      "name": "Giữ Chỗ",
+      "type": "active",
+      "khiLucCost": 30,
+      "cooldown": 9.0,
+      "duration": 3.5,
+      "description": "Giữ 1 chỗ ưu tiên khi đứng sát vùng an toàn giới hạn sức chứa.",
+      "bestRounds": [2, 4],
+      "icon": "anchor"
+    },
+    {
+      "id": "keo_ban",
+      "name": "Kéo Bạn",
+      "type": "active",
+      "khiLucCost": 25,
+      "cooldown": 8.0,
+      "duration": 1.5,
+      "pullRange": 6.0,
+      "description": "Kéo đồng đội gần nhất lên bục hoặc cùng tăng tốc vào vùng đất.",
+      "bestRounds": [2, 4],
+      "icon": "handshake"
+    },
+    {
+      "id": "phao_tre",
+      "name": "Phao Tre",
+      "type": "passive",
+      "khiLucCost": 40,
+      "cooldown": 999,
+      "duration": 1.4,
+      "usesPerRound": 1,
+      "crocStunDuration": 1.8,
+      "description": "Bị động (1 lần/vòng): Bật lùi và làm choáng cá sấu khi bị đớp.",
+      "bestRounds": [3, 4],
+      "icon": "shield"
+    }
+  ]
+}

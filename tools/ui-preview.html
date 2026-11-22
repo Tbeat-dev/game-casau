@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kiểm Tra Pixel UI Atlas & 9-Slice – Cá Sấu Lên Bờ</title>
+    <link rel="stylesheet" href="/src/ui/theme.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 24px;
+        background: #1e1a16;
+        color: #f3e8cf;
+        font-family: "Be Vietnam Pro", system-ui, sans-serif;
+        overflow: auto !important;
+      }
+      h1, h2, h3 { margin: 0 0 8px; color: #ffd071; }
+      section {
+        margin-bottom: 28px;
+        padding: 16px;
+        background: #2b1d17;
+        border: 2px solid #5b3a24;
+      }
+      .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+      .sprite-box {
+        background: repeating-conic-gradient(#34251e 0% 25%, #2a1c16 0% 50%) 50% / 12px 12px;
+        border: 1px solid #634041;
+        padding: 8px;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+      }
+      .px { image-rendering: pixelated; image-rendering: crisp-edges; }
+      .swatch {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border: 1px solid #634041;
+        background: #1e1a16;
+        font-size: 12px;
+      }
+      .chip { width: 20px; height: 20px; border: 1px solid #fff4e0; }
+      .font-test {
+        padding: 10px 12px;
+        background: #f3e8cf;
+        color: #1e1a16;
+        border: 3px solid #493333;
+        margin-bottom: 8px;
+      }
+      .font-vt323 { font-family: "VT323", monospace; }
+      .font-bvp { font-family: "Be Vietnam Pro", sans-serif; }
+      .font-noto { font-family: "Noto Serif", serif; }
+    </style>
+  </head>
+  <body>
+    <h1>Phase UI-0 Preview Inspector — TravelBook Lite + Vietnamese Folk Palette</h1>
+    <p style="font-size:13px; color:#d9caa9;">
+      Kiểm tra tỷ lệ x1/x2/x4/x6 (nearest-neighbor), 9-slice CSS border-image, animation bước rời, bảng màu đo thực tế, độ nét dấu tiếng Việt và mật độ Set A vs Set B.
+    </p>
+
+    <section>
+      <h2>1. Bảng màu đo từ TravelBook &amp; Đông Hồ Việt Hóa</h2>
+      <div class="row">
+        <div class="swatch"><span class="chip" style="background:#FFD7A8"></span> Giấy sách #FFD7A8</div>
+        <div class="swatch"><span class="chip" style="background:#F3E8CF"></span> Giấy dó (tuned) #F3E8CF</div>
+        <div class="swatch"><span class="chip" style="background:#B75B5F"></span> Bìa đỏ gốc #B75B5F</div>
+        <div class="swatch"><span class="chip" style="background:#B3261E"></span> Son đỏ (tuned) #B3261E</div>
+        <div class="swatch"><span class="chip" style="background:#493333"></span> Mực nâu #493333</div>
+        <div class="swatch"><span class="chip" style="background:#45292A"></span> Gỗ slot #45292A</div>
+        <div class="swatch"><span class="chip" style="background:#FFD071"></span> Góc vàng #FFD071</div>
+        <div class="swatch"><span class="chip" style="background:#E0A526"></span> Vàng nghệ #E0A526</div>
+        <div class="swatch"><span class="chip" style="background:#4F6F3A"></span> Xanh tre #4F6F3A</div>
+        <div class="swatch"><span class="chip" style="background:#2B3A67"></span> Chàm #2B3A67</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. So sánh Font Tiếng Việt ở kích thước thực tế (Virtual Scale x2 &amp; x3)</h2>
+      <div class="font-test font-vt323" style="font-size: 20px; line-height: 1.2;">
+        <strong>VT323 (20px / ~10 vpx@x2):</strong> Ắ Ằ Ẳ Ẵ Ặ ễ ộ ự Ừ Ữ Ỵ Đ đ — Cá Sấu Lên Bờ · VÙNG AN TOÀN · ĐÃ PHÁT HIỆN!
+      </div>
+      <div class="font-test font-vt323" style="font-size: 28px; line-height: 1.2;">
+        <strong>VT323 (28px / ~14 vpx@x2):</strong> Ắ Ằ Ẳ Ẵ Ặ ễ ộ ự Ừ Ữ Ỵ Đ đ — SÂN ĐÌNH HỘI LÀNG · GIỮ PHÍM [E] NHẶT BUFF
+      </div>
+      <div class="font-test font-bvp" style="font-size: 13px; font-weight: 700;">
+        <strong>Be Vietnam Pro (13px bold):</strong> Ắ Ằ Ẳ Ẵ Ặ ễ ộ ự Ừ Ữ Ỵ Đ đ — Sân Đình Hội Làng · Chạy lên Đảo Đá!
+      </div>
+      <div class="font-test font-noto" style="font-size: 18px; font-weight: 800;">
+        <strong>Noto Serif (18px extrabold):</strong> Ắ Ằ Ẳ Ẵ Ặ ễ ộ ự Ừ Ữ Ỵ Đ đ — CÁ SẤU LÊN BỜ
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Kiểm tra 9-Slice CSS border-image (x2 / x3 / x4)</h2>
+      <div class="row">
+        <div style="width:186px; border-style:solid; border-width:12px 15px 15px 12px; border-image:url('/assets/ui/variants/popup_giay_do.png') 4 5 5 4 fill / 12px 15px 15px 12px / 0 stretch; color:#1E1A16; padding:4px; font-size:13px; font-weight:700;">
+          Popup Giấy Dó (9-slice 4 5 5 4) — Văn bản tiếng Việt: Ắ Ằ Ẳ Ẵ Ặ
+        </div>
+        <div style="width:200px; border-style:solid; border-width:12px 15px 15px 12px; border-image:url('/assets/ui/variants/popup_wood_dark.png') 4 5 5 4 fill / 12px 15px 15px 12px / 0 stretch; color:#F3E8CF; padding:4px; font-size:13px; font-weight:700;">
+          Popup Gỗ Sẫm (9-slice 4 5 5 4) — Sức chứa 4/5 chỗ
+        </div>
+        <div style="width:200px; border-style:solid; border-width:12px 15px 15px 12px; border-image:url('/assets/ui/variants/popup_vermilion.png') 4 5 5 4 fill / 12px 15px 15px 12px / 0 stretch; color:#F3E8CF; padding:4px; font-size:13px; font-weight:700;">
+          Popup Son Đỏ — SẮP ĐỚP!
+        </div>
+        <div style="width:180px; border-style:solid; border-width:9px; border-image:url('/assets/ui/variants/frame_btn_vermilion.png') 3 3 3 3 fill / 9px / 0 stretch; color:#F3E8CF; padding:2px 6px; font-size:14px; font-weight:700; text-align:center;">
+          Chơi Ngay [Enter]
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>4. Phóng đại Sprite Gốc &amp; Custom Icons (x1 / x2 / x4 / x6)</h2>
+      <div class="row" id="sprite-gallery"></div>
+    </section>
+
+    <section>
+      <h2>5. Animation Bước Rời (Discrete Frame Playback)</h2>
+      <div class="row">
+        <div class="sprite-box">
+          <img id="anim-alert" class="px" width="24" height="42" alt="Alert anim" />
+          <span>Alert01a (x6, 100ms)</span>
+        </div>
+        <div class="sprite-box">
+          <img id="anim-slot" class="px" width="90" height="90" alt="SlotCursor anim" />
+          <span>SlotCursor01a (x3, 100ms)</span>
+        </div>
+        <div class="sprite-box">
+          <img id="anim-btn" class="px" width="90" height="93" alt="Button anim" />
+          <span>Button01a (x3, 70-90ms)</span>
+        </div>
+        <div class="sprite-box">
+          <img id="anim-marker" class="px" width="80" height="60" alt="Marker anim" />
+          <span>Marker01aShow (x4)</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>6. So sánh Mật Độ Pixel: Bộ A (TravelBook 30×30) vs Bộ B (Fantasy RPG 111×111 / 395×57)</h2>
+      <div class="row">
+        <div class="sprite-box">
+          <img class="px" src="/assets/ui/travelbook/UI_TravelBook_Slot01a.png" width="90" height="90" alt="Set A Slot" />
+          <span>Set A Slot01a (30×30 @ x3)</span>
+        </div>
+        <div class="sprite-box">
+          <img class="px" src="/assets/ui/setb_preview/UI_Slot_Selected.png" width="111" height="111" alt="Set B Slot" />
+          <span>Set B Slot_Selected (111×111 @ x1) — Mixels / khác tỷ lệ</span>
+        </div>
+        <div class="sprite-box">
+          <img class="px" src="/assets/ui/setb_preview/UI_Progress_Style2_Bg.png" width="104" height="39" alt="Set B Progress" />
+          <span>Set B Progress (104×39 @ x1)</span>
+        </div>
+      </div>
+    </section>
+
+    <script type="module">
+      import '@fontsource/vt323/vietnamese-400.css';
+      import '@fontsource/be-vietnam-pro/vietnamese-700.css';
+      import '@fontsource/noto-serif/vietnamese-800.css';
+
+      const items = [
+        { label: 'Popup01a (62×30)', src: '/assets/ui/travelbook/UI_TravelBook_Popup01a.png', w: 62, h: 30, scale: 2 },
+        { label: 'Slot01a (30×30)', src: '/assets/ui/travelbook/UI_TravelBook_Slot01a.png', w: 30, h: 30, scale: 3 },
+        { label: 'BookCover VN (224×160)', src: '/assets/ui/variants/book_cover_vermilion.png', w: 224, h: 160, scale: 1 },
+        { label: 'Thí Sinh (16×16)', src: '/assets/ui/custom/icon_contestant.png', w: 16, h: 16, scale: 4 },
+        { label: 'Cá Sấu (16×16)', src: '/assets/ui/custom/icon_crocodile.png', w: 16, h: 16, scale: 4 },
+        { label: 'Nước Rút (16×16)', src: '/assets/ui/custom/skill_wind.png', w: 16, h: 16, scale: 4 },
+        { label: 'Nhảy Sen (16×16)', src: '/assets/ui/custom/skill_lotus.png', w: 16, h: 16, scale: 4 },
+        { label: 'Tiếng Trống (16×16)', src: '/assets/ui/custom/skill_drum.png', w: 16, h: 16, scale: 4 },
+        { label: 'Mắt Cú (16×16)', src: '/assets/ui/custom/skill_eye.png', w: 16, h: 16, scale: 4 },
+        { label: 'Phao Tre (16×16)', src: '/assets/ui/custom/skill_shield.png', w: 16, h: 16, scale: 4 },
+        { label: 'Bùn Lầy (16×16)', src: '/assets/ui/custom/debuff_mud.png', w: 16, h: 16, scale: 4 },
+        { label: 'Ù Tai (16×16)', src: '/assets/ui/custom/debuff_ear.png', w: 16, h: 16, scale: 4 },
+        { label: 'Ấn Đỏ LOẠI (32×32)', src: '/assets/ui/custom/seal_eliminated.png', w: 32, h: 32, scale: 3 },
+        { label: 'Cờ Hội (24×24)', src: '/assets/ui/custom/festival_flag.png', w: 24, h: 24, scale: 3 },
+      ];
+      const gal = document.getElementById('sprite-gallery');
+      for (const it of items) {
+        const div = document.createElement('div');
+        div.className = 'sprite-box';
+        div.innerHTML = `<img class="px" src="${it.src}" width="${it.w * it.scale}" height="${it.h * it.scale}" alt="${it.label}" /><span>${it.label} ×${it.scale}</span>`;
+        gal.appendChild(div);
+      }
+
+      const stepAnim = (id, frames, ms) => {
+        const el = document.getElementById(id);
+        let idx = 0;
+        el.src = frames[0];
+        setInterval(() => {
+          idx = (idx + 1) % frames.length;
+          el.src = frames[idx];
+        }, ms);
+      };
+      stepAnim('anim-alert', [1,2,3,4].map(i => `/assets/ui/travelbook/anim/UI_TravelBook_Alert01a_${i}.png`), 100);
+      stepAnim('anim-slot', [1,2,3,4].map(i => `/assets/ui/travelbook/anim/UI_TravelBook_SlotCursor01a_${i}.png`), 100);
+      stepAnim('anim-btn', [1,2,3,4,5].map(i => `/assets/ui/travelbook/anim/UI_TravelBook_Button01a_${i}.png`), 140);
+      stepAnim('anim-marker', [1,2,3,4].map(i => `/assets/ui/travelbook/anim/UI_TravelBook_Marker01aShow_${i}.png`), 140);
+    </script>
+  </body>
+</html>
